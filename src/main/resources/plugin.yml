@@ -1,0 +1,7 @@
+name: SpigotBroadcast
+author: DevSnox
+version: 1.8
+main: me.devsnox.spigotbroadcast.SpigotBroadcast
+commands:
+  spigotbroadcast:
+    description: The control command of SpigotBroadcast

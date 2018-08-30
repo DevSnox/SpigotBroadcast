@@ -1,0 +1,40 @@
+
+# [ --------------------------------------------------------------------------------------- ] #
+#   -= SpigotBroadcast =-                                                                     #
+#   -= Author: DevSnox =-                                                                     #
+#   -= Version: 1.8 =-                                                                        #
+#   -= Contact: E-mail: me.devsnox@gmail.com Skype: live:chaos3729 Discord: DevSnox#5642 =-   #
+#   -= Informations:                                                                          #
+#   -= Please send Errors per PM on spigotmc.org =-                                           #
+#   -= When you use this Plugin please rate it on spigotmc.org =-                             #
+# [ --------------------------------------------------------------------------------------- ] #
+
+
+# { Basic - Configuration }
+
+  # { HELP: Dont modify this value }
+  config-version: 2
+
+  # { HELP: The timeunit the interval use (HOURS, MINUTES, SECONDS) }
+  timeunit: MINUTES
+
+  # { HELP: The interval of displaying messages }
+  interval: 2
+
+# { --------------------- }
+
+
+# { Messages }
+
+  # { HELP: The prefix displayed before every message }
+  prefix: "&e[&cBroadcast&e]"
+
+  # { HELP: You can use the messages.txt file for the messages: each line is one message }
+  enabled: false
+
+  # { HELP: The list of messages. You can use all colorcodes with '&' before! }
+  messages:
+  - "&eIch bin eine gelbe Nachricht"
+  - "&aI'am a green message!"
+
+#{ --------- }
