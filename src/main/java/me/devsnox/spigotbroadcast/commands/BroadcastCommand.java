@@ -4,15 +4,15 @@ import me.devsnox.spigotbroadcast.SpigotBroadcast;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class BroadcastCommand implements org.bukkit.command.CommandExecutor {
+public final class BroadcastCommand implements org.bukkit.command.CommandExecutor {
 
-    private SpigotBroadcast spigotBroadcast;
+    private final SpigotBroadcast spigotBroadcast;
 
-    public BroadcastCommand(SpigotBroadcast spigotBroadcast) {
+    public BroadcastCommand(final SpigotBroadcast spigotBroadcast) {
         this.spigotBroadcast = spigotBroadcast;
     }
 
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
+    public boolean onCommand(final CommandSender commandSender, final Command command, final String label, final String[] args) {
         if (commandSender.hasPermission("spigotbroadcast.admin")) {
             if (args.length != 0) {
                 if (args[0].equalsIgnoreCase("reload")) {

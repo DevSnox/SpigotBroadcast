@@ -1,6 +1,6 @@
 name: SpigotBroadcast
 author: DevSnox
-version: "1.9-RELEASE"
+version: "1.9.1-RELEASE"
 main: me.devsnox.spigotbroadcast.SpigotBroadcast
 commands:
   spigotbroadcast:

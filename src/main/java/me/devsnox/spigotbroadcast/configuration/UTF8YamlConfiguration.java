@@ -21,7 +21,7 @@ import com.google.common.io.Files;
  *  class by @Cybermaxke
  */
 
-public class UTF8YamlConfiguration extends YamlConfiguration {
+public final class UTF8YamlConfiguration extends YamlConfiguration {
 
     @Override
     public void save(File file) throws IOException {

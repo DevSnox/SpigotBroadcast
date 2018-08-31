@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class BroadcastConfigurator {
+public final class BroadcastConfigurator {
 
     private SpigotBroadcast spigotBroadcast;
 
@@ -69,7 +69,7 @@ public class BroadcastConfigurator {
 
         broadcastConfiguration = new BroadcastConfiguration(yamlConfiguration.getString("prefix"), yamlConfiguration.getInt("interval"), timeUnit, yamlConfiguration.getStringList("messages"));
 
-        if(yamlConfiguration.getBoolean("enabled") == true) {
+        if(yamlConfiguration.getBoolean("enabled")) {
             List<String> lines = new ArrayList<>();
 
             try (BufferedReader br = new BufferedReader((new InputStreamReader(new FileInputStream(new File("plugins" + File.separator + spigotBroadcast.getName() + File.separator + "messages.txt")), Charsets.UTF_8)))) {
@@ -82,7 +82,7 @@ public class BroadcastConfigurator {
                 e.printStackTrace();
             }
 
-            broadcastConfiguration.setMessages(lines);
+            broadcastConfiguration.getMessages().addAll(lines);
         }
     }
 

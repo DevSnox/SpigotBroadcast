@@ -10,20 +10,22 @@ import java.util.logging.Level;
 public class AdvancedPlugin extends JavaPlugin {
 
     @Override
-    public void saveResource(String resourcePath, boolean replace) {
+    public final void saveResource(final String resourcePath, final boolean replace) {
         if (resourcePath == null || resourcePath.equals("")) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
 
-        resourcePath = resourcePath.replace('\\', '/');
-        InputStream in = getResource(resourcePath);
+        String editedResourcePath = resourcePath.replace('\\', '/');
+
+        InputStream in = getResource(editedResourcePath);
+
         if (in == null) {
-            throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + super.getFile());
+            throw new IllegalArgumentException("The embedded resource '" + editedResourcePath + "' cannot be found in " + super.getFile());
         }
 
-        File outFile = new File(super.getDataFolder(), resourcePath);
-        int lastIndex = resourcePath.lastIndexOf('/');
-        File outDir = new File(super.getDataFolder(), resourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
+        File outFile = new File(super.getDataFolder(), editedResourcePath);
+        int lastIndex = editedResourcePath.lastIndexOf('/');
+        File outDir = new File(super.getDataFolder(), editedResourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
 
         if (!outDir.exists()) {
             outDir.mkdirs();
@@ -46,7 +48,7 @@ public class AdvancedPlugin extends JavaPlugin {
     }
 
     @Override
-    public InputStream getResource(String filename) {
+    public final InputStream getResource(final String filename) {
         if (filename == null) {
             throw new IllegalArgumentException("Filename cannot be null");
         }

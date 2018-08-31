@@ -6,7 +6,7 @@
 
     <groupId>me.devsnox</groupId>
     <artifactId>spigotbroadcast</artifactId>
-    <version>1.9-RELEASE</version>
+    <version>1.9.1-RELEASE</version>
     <name>SpigotBroadcast</name>
 
     <repositories>

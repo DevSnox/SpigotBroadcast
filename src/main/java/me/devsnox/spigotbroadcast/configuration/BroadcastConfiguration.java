@@ -3,14 +3,14 @@ package me.devsnox.spigotbroadcast.configuration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class BroadcastConfiguration {
+public final class BroadcastConfiguration {
 
-    private String prefix;
-    private Integer interval;
-    private TimeUnit timeUnit;
-    private List<String> messages;
+    private final String prefix;
+    private final Integer interval;
+    private final TimeUnit timeUnit;
+    private final List<String> messages;
 
-    public BroadcastConfiguration(String prefix, int interval, TimeUnit timeUnit, List<String> messages) {
+    public BroadcastConfiguration(final String prefix, final int interval, final TimeUnit timeUnit, final List<String> messages) {
         this.prefix = prefix;
         this.interval = Integer.valueOf(interval);
         this.timeUnit = timeUnit;
@@ -31,9 +31,5 @@ public class BroadcastConfiguration {
 
     public List<String> getMessages() {
         return messages;
-    }
-
-    public void setMessages(List<String> messages) {
-        this.messages = messages;
     }
 }

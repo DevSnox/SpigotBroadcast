@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SpigotBroadcast extends AdvancedPlugin {
+public final class SpigotBroadcast extends AdvancedPlugin {
 
     private BroadcastConfigurator broadcastConfigurator;
     private BroadcastTask broadcastTask;
@@ -83,7 +83,7 @@ public class SpigotBroadcast extends AdvancedPlugin {
         this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "INFORMATIONS" + ChatColor.DARK_GRAY + " }");
         this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= SpigotBroadcast =-  ");
         this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= Author: DevSnox =-");
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= Version: 1.9-RELEASE =-");
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= Version: 1.9.1-RELEASE =-");
         this.getLogger().log(Level.INFO, ChatColor.DARK_RED + "Please report bugs on spigotmc.org per PM");
         this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "------------" + ChatColor.DARK_GRAY + " }");
         this.getLogger().log(Level.INFO, " ");

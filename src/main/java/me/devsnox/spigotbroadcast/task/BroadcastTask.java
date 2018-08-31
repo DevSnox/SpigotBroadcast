@@ -9,7 +9,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.TimeUnit;
 
-public class BroadcastTask extends org.bukkit.scheduler.BukkitRunnable {
+public final class BroadcastTask extends org.bukkit.scheduler.BukkitRunnable {
 
     private Plugin plugin;
 
@@ -19,7 +19,7 @@ public class BroadcastTask extends org.bukkit.scheduler.BukkitRunnable {
 
     public BroadcastTask(Plugin plugin, BroadcastConfiguration broadcastConfiguration) {
         this.plugin = plugin;
-        count = 0;
+        this.count = 0;
         this.broadcastConfiguration = broadcastConfiguration;
     }
 
