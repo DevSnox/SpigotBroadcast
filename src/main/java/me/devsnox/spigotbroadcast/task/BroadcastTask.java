@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
+import java.util.concurrent.TimeUnit;
+
 public class BroadcastTask extends org.bukkit.scheduler.BukkitRunnable {
 
     private Plugin plugin;
@@ -22,7 +24,7 @@ public class BroadcastTask extends org.bukkit.scheduler.BukkitRunnable {
     }
 
     public void start() {
-        runTaskTimer(plugin, 0L, broadcastConfiguration.getInterval().intValue() * broadcastConfiguration.getTickUnit().getTicks());
+        runTaskTimer(plugin, 0L, broadcastConfiguration.getTimeUnit().toSeconds(broadcastConfiguration.getInterval().intValue()) * 20);
     }
 
     public void run() {

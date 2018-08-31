@@ -9,52 +9,30 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class SpigotBroadcast extends AdvancedPlugin {
 
     private BroadcastConfigurator broadcastConfigurator;
     private BroadcastTask broadcastTask;
 
+    @Override
     public void onEnable() {
-        Bukkit.getConsoleSender().sendMessage(" ");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
-        Bukkit.getConsoleSender().sendMessage(" ");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "INFORMATIONS" + ChatColor.DARK_GRAY + " }");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= SpigotBroadcast =-  ");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= Author: DevSnox =-");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= Version: 1.8 =-");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "Please report bugs on spigotmc.org per PM");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "------------" + ChatColor.DARK_GRAY + " }");
-        Bukkit.getConsoleSender().sendMessage(" ");
+        this.load();
+    }
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "LOADING" + ChatColor.DARK_GRAY + " }");
+    private void load() {
+        this.sendHeader();
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= register metrics =-");
-        new Metrics(this);
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= creating config.yml =-");
         this.createConfigFile();
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= creating messages.txt =-");
         this.createMessagesFile();
+        this.loadConfiguration();
+        this.startTask();
+        this.registerCommands();
+        this.initializeMetrics();
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= loading configuration =-");
-        broadcastConfigurator = new BroadcastConfigurator(this);
-        broadcastConfigurator.load();
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= starting task =-");
-        broadcastTask = new BroadcastTask(this, broadcastConfigurator.getBroadcastConfiguration());
-        broadcastTask.start();
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "-= register commands =-");
-        getCommand("spigotbroadcast").setExecutor(new BroadcastCommand(this));
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "sucessfully enabled SpigotBroadcast");
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "-------" + ChatColor.DARK_GRAY + " }");
-
-        Bukkit.getConsoleSender().sendMessage(" ");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
-        Bukkit.getConsoleSender().sendMessage(" ");
+        this.sendFooter();
     }
 
     public void reload() {
@@ -63,14 +41,63 @@ public class SpigotBroadcast extends AdvancedPlugin {
         this.broadcastTask.cancel();
         this.broadcastTask = null;
 
-        this.onEnable();
+        this.load();
+    }
+
+    private void registerCommands() {
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= register commands =-");
+        this.getCommand("spigotbroadcast").setExecutor(new BroadcastCommand(this));
+    }
+
+    private void startTask() {
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= starting task =-");
+        broadcastTask = new BroadcastTask(this, broadcastConfigurator.getBroadcastConfiguration());
+        broadcastTask.start();
+    }
+
+    private void initializeMetrics() {
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= register metrics =-");
+        new Metrics(this);
     }
 
     public void createConfigFile() {
-        saveResource("config.yml", false);
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= creating config.yml =-");
+        this.saveResource("config.yml", false);
     }
 
     public void createMessagesFile() {
-        saveResource("messages.txt", false);
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= creating messages.txt =-");
+        this.saveResource("messages.txt", false);
+    }
+
+    private void loadConfiguration() {
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= loading configuration =-");
+        broadcastConfigurator = new BroadcastConfigurator(this);
+        broadcastConfigurator.load();
+    }
+
+    private void sendHeader() {
+        this.getLogger().log(Level.INFO, " ");
+        this.getLogger().log(Level.INFO, ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
+        this.getLogger().log(Level.INFO, " ");
+        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "INFORMATIONS" + ChatColor.DARK_GRAY + " }");
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= SpigotBroadcast =-  ");
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= Author: DevSnox =-");
+        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= Version: 1.9-RELEASE =-");
+        this.getLogger().log(Level.INFO, ChatColor.DARK_RED + "Please report bugs on spigotmc.org per PM");
+        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "------------" + ChatColor.DARK_GRAY + " }");
+        this.getLogger().log(Level.INFO, " ");
+        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "LOADING" + ChatColor.DARK_GRAY + " }");
+    }
+
+
+    private void sendFooter() {
+        this.getLogger().log(Level.INFO, ChatColor.GREEN + "sucessfully enabled SpigotBroadcast");
+
+        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "-------" + ChatColor.DARK_GRAY + " }");
+
+        this.getLogger().log(Level.INFO, " ");
+        this.getLogger().log(Level.INFO, ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
+        this.getLogger().log(Level.INFO, " ");
     }
 }

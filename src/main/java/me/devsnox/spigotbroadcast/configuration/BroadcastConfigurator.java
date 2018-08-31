@@ -2,16 +2,14 @@ package me.devsnox.spigotbroadcast.configuration;
 
 import com.google.common.base.Charsets;
 import me.devsnox.spigotbroadcast.SpigotBroadcast;
-import me.devsnox.spigotbroadcast.task.TickUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BroadcastConfigurator {
 
@@ -51,15 +49,15 @@ public class BroadcastConfigurator {
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + " - IMPORTANT - ");
         }
 
-        TickUnit tickUnit = TickUnit.MINUTES;
+        TimeUnit timeUnit = TimeUnit.MINUTES;
 
         try {
-            tickUnit = TickUnit.valueOf(yamlConfiguration.getString("timeunit"));
+            timeUnit.valueOf(yamlConfiguration.getString("timeunit"));
         } catch (IllegalArgumentException exception) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error while trying to get timeunit!");
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Valid timeunits are HOURS, MINUTES, SECONDS!");
 
-            yamlConfiguration.set("timeunit", TickUnit.MINUTES);
+            yamlConfiguration.set("timeunit", timeUnit.MINUTES);
             try {
                 yamlConfiguration.save(config);
             } catch (IOException e) {
@@ -69,7 +67,7 @@ public class BroadcastConfigurator {
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "TimeUnit changed to MINUTES, you can change it in the config.yml!");
         }
 
-        broadcastConfiguration = new BroadcastConfiguration(yamlConfiguration.getString("prefix"), yamlConfiguration.getInt("interval"), tickUnit, yamlConfiguration.getStringList("messages"));
+        broadcastConfiguration = new BroadcastConfiguration(yamlConfiguration.getString("prefix"), yamlConfiguration.getInt("interval"), timeUnit, yamlConfiguration.getStringList("messages"));
 
         if(yamlConfiguration.getBoolean("enabled") == true) {
             List<String> lines = new ArrayList<>();

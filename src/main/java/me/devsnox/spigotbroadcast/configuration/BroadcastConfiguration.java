@@ -1,20 +1,19 @@
 package me.devsnox.spigotbroadcast.configuration;
 
-import me.devsnox.spigotbroadcast.task.TickUnit;
-
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BroadcastConfiguration {
 
     private String prefix;
     private Integer interval;
-    private TickUnit tickUnit;
+    private TimeUnit timeUnit;
     private List<String> messages;
 
-    public BroadcastConfiguration(String prefix, int interval, TickUnit tickUnit, List<String> messages) {
+    public BroadcastConfiguration(String prefix, int interval, TimeUnit timeUnit, List<String> messages) {
         this.prefix = prefix;
         this.interval = Integer.valueOf(interval);
-        this.tickUnit = tickUnit;
+        this.timeUnit = timeUnit;
         this.messages = messages;
     }
 
@@ -26,8 +25,8 @@ public class BroadcastConfiguration {
         return interval;
     }
 
-    public TickUnit getTickUnit() {
-        return tickUnit;
+    public TimeUnit getTimeUnit() {
+        return timeUnit;
     }
 
     public List<String> getMessages() {

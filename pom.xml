@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.devsnox</groupId>
-    <artifactId>SpigotBroadcast</artifactId>
-    <version>1.8-SNAPSHOT</version>
+    <artifactId>spigotbroadcast</artifactId>
+    <version>1.9-RELEASE</version>
+    <name>SpigotBroadcast</name>
 
     <repositories>
         <repository>
@@ -61,8 +62,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <finalName>${project.name}-${project.version}</finalName>
                 </configuration>
             </plugin>
         </plugins>
