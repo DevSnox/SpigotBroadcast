@@ -15,17 +15,17 @@ public abstract class AdvancedPlugin extends JavaPlugin {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
 
-        String editedResourcePath = resourcePath.replace('\\', '/');
+        final String editedResourcePath = resourcePath.replace('\\', '/');
 
-        InputStream in = getResource(editedResourcePath);
+        final InputStream in = getResource(editedResourcePath);
 
         if (in == null) {
             throw new IllegalArgumentException("The embedded resource '" + editedResourcePath + "' cannot be found in " + super.getFile());
         }
 
-        File outFile = new File(super.getDataFolder(), editedResourcePath);
-        int lastIndex = editedResourcePath.lastIndexOf('/');
-        File outDir = new File(super.getDataFolder(), editedResourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
+        final File outFile = new File(super.getDataFolder(), editedResourcePath);
+        final int lastIndex = editedResourcePath.lastIndexOf('/');
+        final File outDir = new File(super.getDataFolder(), editedResourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
 
         if (!outDir.exists()) {
             outDir.mkdirs();
@@ -54,13 +54,13 @@ public abstract class AdvancedPlugin extends JavaPlugin {
         }
 
         try {
-            URL url = getClassLoader().getResource(filename);
+            final URL url = getClassLoader().getResource(filename);
 
             if (url == null) {
                 return null;
             }
 
-            URLConnection connection = url.openConnection();
+            final URLConnection connection = url.openConnection();
             connection.setUseCaches(false);
             return connection.getInputStream();
         } catch (IOException ex) {

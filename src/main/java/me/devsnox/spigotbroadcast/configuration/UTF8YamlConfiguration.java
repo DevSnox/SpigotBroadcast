@@ -24,17 +24,18 @@ import com.google.common.io.Files;
 public final class UTF8YamlConfiguration extends YamlConfiguration {
 
     @Override
-    public void save(File file) throws IOException {
+    public void save(final File file) throws IOException {
         Validate.notNull(file, "File cannot be null");
 
         // Create the parent dirs
         Files.createParentDirs(file);
 
         // Save the data as a string
-        String data = this.saveToString();
+        final String data = this.saveToString();
 
         // Write the data as utf8
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
+        final Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
+
         try {
             writer.write(data);
         } finally {
@@ -43,7 +44,7 @@ public final class UTF8YamlConfiguration extends YamlConfiguration {
     }
 
     @Override
-    public void load(File file) throws FileNotFoundException, IOException, InvalidConfigurationException {
+    public final void load(final File file) throws FileNotFoundException, IOException, InvalidConfigurationException {
         Validate.notNull(file, "File cannot be null");
         // Load the content of the target file
         this.load(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
@@ -51,7 +52,7 @@ public final class UTF8YamlConfiguration extends YamlConfiguration {
 
     @Override
     @Deprecated
-    public void load(InputStream stream) throws IOException, InvalidConfigurationException {
+    public void load(final InputStream stream) throws IOException, InvalidConfigurationException {
         Validate.notNull(stream, "Stream cannot be null");
         // Load the content of the target stream
         this.load(new InputStreamReader(stream, Charsets.UTF_8));

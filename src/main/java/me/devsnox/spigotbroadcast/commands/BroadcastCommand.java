@@ -14,23 +14,25 @@ public final class BroadcastCommand implements org.bukkit.command.CommandExecuto
 
     public boolean onCommand(final CommandSender commandSender, final Command command, final String label, final String[] args) {
         if (commandSender.hasPermission("spigotbroadcast.admin")) {
+
+            final String pluginName = this.spigotBroadcast.getName();
+
             if (args.length != 0) {
                 if (args[0].equalsIgnoreCase("reload")) {
-                    spigotBroadcast.reload();
+                    this.spigotBroadcast.reload();
                 } else if (args[0].equalsIgnoreCase("info")) {
-                    commandSender.sendMessage("§eSpigotBroadcast §cv." + spigotBroadcast.getDescription().getVersion() + " §eby DevSnox");
+                    commandSender.sendMessage("§e" + pluginName + " §cv." + this.spigotBroadcast.getDescription().getVersion() + " §eby DevSnox");
                 }
             } else {
-                commandSender.sendMessage("§8|§b| §3SpigotBroadcast §b|§8|");
+                commandSender.sendMessage("§8|§b| §3" + pluginName  + " §b|§8|");
                 commandSender.sendMessage(" ");
-                commandSender.sendMessage("§eSpigotBroadcast §cv." + spigotBroadcast
-                        .getDescription().getVersion() + " §eby DevSnox");
+                commandSender.sendMessage("§e" + pluginName + " §cv." + this.spigotBroadcast.getDescription().getVersion() + " §eby DevSnox");
                 commandSender.sendMessage(" ");
                 commandSender.sendMessage("§aCommands:");
-                commandSender.sendMessage("§7/§cspigotbroadcast §einfo");
-                commandSender.sendMessage("§7/§cspigotbroadcast §ereload");
+                commandSender.sendMessage("§7/§c" + pluginName.toLowerCase() + " §einfo");
+                commandSender.sendMessage("§7/§c" + pluginName.toLowerCase() + " §ereload");
                 commandSender.sendMessage(" ");
-                commandSender.sendMessage("§8|§b| §3SpigotBroadcast §b|§8|");
+                commandSender.sendMessage("§8|§b| §3" + pluginName + " §b|§8|");
             }
         }
         return false;
