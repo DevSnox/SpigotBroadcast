@@ -7,7 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 
-public class AdvancedPlugin extends JavaPlugin {
+public abstract class AdvancedPlugin extends JavaPlugin {
 
     @Override
     public final void saveResource(final String resourcePath, final boolean replace) {

@@ -45,59 +45,63 @@ public final class SpigotBroadcast extends AdvancedPlugin {
     }
 
     private void registerCommands() {
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= register commands =-");
+        this.log(ChatColor.YELLOW + "-= register commands =-");
         this.getCommand("spigotbroadcast").setExecutor(new BroadcastCommand(this));
     }
 
     private void startTask() {
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= starting task =-");
-        broadcastTask = new BroadcastTask(this, broadcastConfigurator.getBroadcastConfiguration());
-        broadcastTask.start();
+        this.log(ChatColor.YELLOW + "-= starting task =-");
+        this.broadcastTask = new BroadcastTask(this, broadcastConfigurator.getBroadcastConfiguration());
+        this.broadcastTask.start();
     }
 
     private void initializeMetrics() {
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= register metrics =-");
+        this.log(ChatColor.YELLOW + "-= register metrics =-");
         new Metrics(this);
     }
 
     public void createConfigFile() {
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= creating config.yml =-");
+        this.log(ChatColor.YELLOW + "-= creating config.yml =-");
         this.saveResource("config.yml", false);
     }
 
     public void createMessagesFile() {
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= creating messages.txt =-");
+        this.log(ChatColor.YELLOW + "-= creating messages.txt =-");
         this.saveResource("messages.txt", false);
     }
 
     private void loadConfiguration() {
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= loading configuration =-");
-        broadcastConfigurator = new BroadcastConfigurator(this);
-        broadcastConfigurator.load();
+        this.log(ChatColor.YELLOW + "-= loading configuration =-");
+        this.broadcastConfigurator = new BroadcastConfigurator(this);
+        this.broadcastConfigurator.load();
     }
 
     private void sendHeader() {
-        this.getLogger().log(Level.INFO, " ");
-        this.getLogger().log(Level.INFO, ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
-        this.getLogger().log(Level.INFO, " ");
-        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "INFORMATIONS" + ChatColor.DARK_GRAY + " }");
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= SpigotBroadcast =-  ");
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= Author: DevSnox =-");
-        this.getLogger().log(Level.INFO, ChatColor.YELLOW + "-= Version: 1.9.1-RELEASE =-");
-        this.getLogger().log(Level.INFO, ChatColor.DARK_RED + "Please report bugs on spigotmc.org per PM");
-        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "------------" + ChatColor.DARK_GRAY + " }");
-        this.getLogger().log(Level.INFO, " ");
-        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "LOADING" + ChatColor.DARK_GRAY + " }");
+        this.log(" ");
+        this.log(ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
+        this.log(" ");
+        this.log(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "INFORMATIONS" + ChatColor.DARK_GRAY + " }");
+        this.log(ChatColor.YELLOW + "-= SpigotBroadcast =-  ");
+        this.log(ChatColor.YELLOW + "-= Author: DevSnox =-");
+        this.log(ChatColor.YELLOW + "-= Version: 1.9.1-RELEASE =-");
+        this.log(ChatColor.DARK_RED + "Please report bugs on spigotmc.org per PM");
+        this.log(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "------------" + ChatColor.DARK_GRAY + " }");
+        this.log(" ");
+        this.log(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "LOADING" + ChatColor.DARK_GRAY + " }");
     }
 
 
     private void sendFooter() {
-        this.getLogger().log(Level.INFO, ChatColor.GREEN + "sucessfully enabled SpigotBroadcast");
+        this.log(ChatColor.GREEN + "successfully enabled SpigotBroadcast");
 
-        this.getLogger().log(Level.INFO, ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "-------" + ChatColor.DARK_GRAY + " }");
+        this.log(ChatColor.DARK_GRAY + "{ " + ChatColor.GREEN + "-------" + ChatColor.DARK_GRAY + " }");
 
-        this.getLogger().log(Level.INFO, " ");
-        this.getLogger().log(Level.INFO, ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
-        this.getLogger().log(Level.INFO, " ");
+        this.log(" ");
+        this.log(ChatColor.AQUA + "[ -------------------------------------------------------------- ]");
+        this.log(" ");
+    }
+
+    private void log(String message) {
+        this.getLogger().log(Level.INFO, message);
     }
 }
