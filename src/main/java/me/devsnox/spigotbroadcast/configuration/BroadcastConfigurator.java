@@ -5,30 +5,32 @@ import me.devsnox.spigotbroadcast.SpigotBroadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public final class BroadcastConfigurator {
 
-    private SpigotBroadcast spigotBroadcast;
+    private final SpigotBroadcast spigotBroadcast;
 
-    private File config;
-    private UTF8YamlConfiguration yamlConfiguration;
+    private final File config;
+    private final YamlConfiguration yamlConfiguration;
     private BroadcastConfiguration broadcastConfiguration;
 
-    public BroadcastConfigurator(SpigotBroadcast spigotBroadcast) {
+    public BroadcastConfigurator(final SpigotBroadcast spigotBroadcast) {
         this.spigotBroadcast = spigotBroadcast;
 
-        config = new File("plugins" + File.separator + spigotBroadcast.getName() + File.separator + "config.yml");
+        this.config = new File(this.spigotBroadcast.getDataFolder() + File.separator + "config.yml");
+
+        this.yamlConfiguration = new UTF8YamlConfiguration();
+
         try {
-            yamlConfiguration = new UTF8YamlConfiguration();
-            yamlConfiguration.load(config);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
+            this.yamlConfiguration.load(config);
+        } catch (final IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -36,56 +38,58 @@ public final class BroadcastConfigurator {
 
     public void load() {
         if(!yamlConfiguration.isSet("config-version")) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + " - IMPORTANT - ");
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Found old not compatible configuration File!");
+            this.log(Level.WARNING,"Found old not compatible configuration File!");
 
-            this.config.renameTo(new File("plugins" + File.separator + spigotBroadcast.getName() + File.separator + "old-config.yml.txt"));
+            this.config.renameTo(new File("plugins" + File.separator + this.spigotBroadcast.getName() + File.separator + "old-config.yml.txt"));
 
             this.config.delete();
             this.spigotBroadcast.createConfigFile();
 
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Sucessfully changed config.yml to version 2!");
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Old config.yml has been saved to old-config.yml.txt");
-            Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + " - IMPORTANT - ");
+            this.log(Level.INFO,"Sucessfully changed config.yml to version 2!");
+            this.log(Level.INFO,"Old config.yml has been saved to old-config.yml.txt");
         }
 
         TimeUnit timeUnit = TimeUnit.MINUTES;
 
         try {
-            timeUnit.valueOf(yamlConfiguration.getString("timeunit"));
-        } catch (IllegalArgumentException exception) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error while trying to get timeunit!");
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Valid timeunits are HOURS, MINUTES, SECONDS!");
+            timeUnit = timeUnit.valueOf(yamlConfiguration.getString("timeunit"));
+        } catch (final IllegalArgumentException exception) {
+            this.log(Level.SEVERE,ChatColor.RED + "" + ChatColor.BOLD + "Error while trying to get timeunit!");
+            this.log(Level.INFO,ChatColor.RED + "" + ChatColor.BOLD + "Valid timeunits are HOURS, MINUTES, SECONDS!");
 
-            yamlConfiguration.set("timeunit", timeUnit.MINUTES);
+            this.yamlConfiguration.set("timeunit", timeUnit.MINUTES);
+
             try {
-                yamlConfiguration.save(config);
-            } catch (IOException e) {
+                this.yamlConfiguration.save(config);
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
 
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "TimeUnit changed to MINUTES, you can change it in the config.yml!");
+            this.log(Level.INFO,"TimeUnit changed to MINUTES, you can change it in the config.yml!");
         }
 
-        broadcastConfiguration = new BroadcastConfiguration(yamlConfiguration.getString("prefix"), yamlConfiguration.getInt("interval"), timeUnit, yamlConfiguration.getStringList("messages"));
+        this.broadcastConfiguration = new BroadcastConfiguration(this.yamlConfiguration.getString("prefix"), this.yamlConfiguration.getInt("interval"), timeUnit, this.yamlConfiguration.getStringList("messages"));
 
-        if(yamlConfiguration.getBoolean("enabled")) {
+        if(this.yamlConfiguration.getBoolean("enabled")) {
             List<String> lines = new ArrayList<>();
 
-            try (BufferedReader br = new BufferedReader((new InputStreamReader(new FileInputStream(new File("plugins" + File.separator + spigotBroadcast.getName() + File.separator + "messages.txt")), Charsets.UTF_8)))) {
+            try (final BufferedReader br = new BufferedReader((new InputStreamReader(new FileInputStream(new File(this.spigotBroadcast.getDataFolder() + File.separator + "messages.txt")), Charsets.UTF_8)))) {
                 for(String line; (line = br.readLine()) != null; ) {
                     lines.add(line);
                 }
-            } catch (FileNotFoundException e) {
+            } catch (final FileNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
 
-            broadcastConfiguration.getMessages().addAll(lines);
+            this.broadcastConfiguration.getMessages().addAll(lines);
         }
     }
 
+    private void log(final Level level, final String message) {
+        Bukkit.getLogger().log(level, message);
+    }
 
     public BroadcastConfiguration getBroadcastConfiguration() {
         return broadcastConfiguration;
