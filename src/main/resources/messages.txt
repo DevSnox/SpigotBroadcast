@@ -1,1 +1,0 @@
-# { HELP: Read the informations about txt files in the config.yml } #

@@ -12,9 +12,6 @@
 
 # { Basic - Configuration }
 
-  # { HELP: Dont modify this value }
-  config-version: 2
-
   # { HELP: The timeunit the interval use (HOURS, MINUTES, SECONDS) }
   timeunit: MINUTES
 
@@ -28,9 +25,6 @@
 
   # { HELP: The prefix displayed before every message }
   prefix: "&e[&cBroadcast&e]"
-
-  # { HELP: You can use the messages.txt file for the messages: each line is one message }
-  enabled: false
 
   # { HELP: The list of messages. You can use all colorcodes with '&' before! }
   messages:

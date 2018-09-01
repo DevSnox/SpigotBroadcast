@@ -23,7 +23,6 @@ public final class SpigotBroadcast extends AdvancedPlugin {
         this.sendHeader();
 
         this.createConfigFile();
-        this.createMessagesFile();
         this.loadConfiguration();
         this.startTask();
         this.registerCommands();
@@ -60,11 +59,6 @@ public final class SpigotBroadcast extends AdvancedPlugin {
     public void createConfigFile() {
         this.log(ChatColor.YELLOW + "-= creating config.yml =-");
         this.saveResource("config.yml", false);
-    }
-
-    public void createMessagesFile() {
-        this.log(ChatColor.YELLOW + "-= creating messages.txt =-");
-        this.saveResource("messages.txt", false);
     }
 
     private void loadConfiguration() {
