@@ -1,11 +1,11 @@
 package me.devsnox.spigotbroadcast.configuration;
 
 import com.google.common.base.Charsets;
-import me.devsnox.spigotbroadcast.SpigotBroadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,22 +14,21 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public final class BroadcastConfigurator {
-
-    private final SpigotBroadcast spigotBroadcast;
+    private final JavaPlugin javaPlugin;
 
     private final File config;
     private final YamlConfiguration yamlConfiguration;
     private BroadcastConfiguration broadcastConfiguration;
-
-    public BroadcastConfigurator(final SpigotBroadcast spigotBroadcast) {
-        this.spigotBroadcast = spigotBroadcast;
-
-        this.config = new File(this.spigotBroadcast.getDataFolder() + File.separator + "config.yml");
+    
+    public BroadcastConfigurator(final JavaPlugin javaPlugin)
+    {
+        this.javaPlugin = javaPlugin;
+        this.config = new File(this.javaPlugin.getDataFolder() + File.separator + "config.yml");
 
         this.yamlConfiguration = new UTF8YamlConfiguration();
 
         try {
-            this.yamlConfiguration.load(config);
+            this.yamlConfiguration.load(this.config);
         } catch (final IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -40,15 +39,19 @@ public final class BroadcastConfigurator {
         TimeUnit timeUnit = TimeUnit.MINUTES;
 
         try {
-            timeUnit = TimeUnit.valueOf(yamlConfiguration.getString("timeunit"));
+            timeUnit = TimeUnit.valueOf(this.yamlConfiguration.getString("timeunit"));
+            if (timeUnit == TimeUnit.MICROSECONDS || timeUnit == TimeUnit.MILLISECONDS)
+            {
+                throw new IllegalArgumentException("TimeUnit is tow low");
+            }
         } catch (final IllegalArgumentException exception) {
             this.log(Level.SEVERE,ChatColor.RED + "" + ChatColor.BOLD + "Error while trying to get timeunit!");
-            this.log(Level.INFO,ChatColor.RED + "" + ChatColor.BOLD + "Valid timeunits are HOURS, MINUTES, SECONDS!");
+            this.log(Level.INFO, ChatColor.RED + "" + ChatColor.BOLD + "Valid timeunits are DAYS, HOURS, MINUTES, SECONDS!");
 
             this.yamlConfiguration.set("timeunit", TimeUnit.MINUTES);
 
             try {
-                this.yamlConfiguration.save(config);
+                this.yamlConfiguration.save(this.config);
             } catch (final IOException e) {
                 e.printStackTrace();
             }
@@ -60,7 +63,7 @@ public final class BroadcastConfigurator {
 
         if(this.yamlConfiguration.isSet("enabled")) {
             if(this.yamlConfiguration.getBoolean("enabled")) {
-                final File messagesFile = new File(this.spigotBroadcast.getDataFolder() + File.separator + "messages.txt");
+                final File messagesFile = new File(this.javaPlugin.getDataFolder() + File.separator + "messages.txt");
 
                 if(messagesFile.exists()) {
                     final List<String> lines = new ArrayList<>();
@@ -69,8 +72,6 @@ public final class BroadcastConfigurator {
                         for(String line; (line = br.readLine()) != null; ) {
                             lines.add(line);
                         }
-                    } catch (final FileNotFoundException e) {
-                        e.printStackTrace();
                     } catch (final IOException e) {
                         e.printStackTrace();
                     }
@@ -89,6 +90,6 @@ public final class BroadcastConfigurator {
     }
 
     public BroadcastConfiguration getBroadcastConfiguration() {
-        return broadcastConfiguration;
+        return this.broadcastConfiguration;
     }
 }
