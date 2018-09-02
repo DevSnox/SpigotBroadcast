@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2018 Yasin Dalal (DevSnox)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package me.devsnox.spigotbroadcast.configuration;
 
 import com.google.common.base.Charsets;
@@ -9,7 +26,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.*;
 
 /**
- *  class by @Cybermaxke
+ * class by @Cybermaxke
+ * edited by Yasin Dalal (DevSnox)
  */
 
 public final class UTF8YamlConfiguration extends YamlConfiguration {
@@ -25,8 +43,7 @@ public final class UTF8YamlConfiguration extends YamlConfiguration {
         final String data = this.saveToString();
 
         // Write the data as utf8
-        try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8))
-        {
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8)) {
             writer.write(data);
         }
     }
@@ -34,6 +51,7 @@ public final class UTF8YamlConfiguration extends YamlConfiguration {
     @Override
     public final void load(final File file) throws IOException, InvalidConfigurationException {
         Validate.notNull(file, "File cannot be null");
+
         // Load the content of the target file
         this.load(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
     }

@@ -6,11 +6,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public final class BroadcastTask extends BukkitRunnable
-{
+/**
+ * @author Yasin Dalal (DevSnox)
+ * Created by Yasin Dalal (DevSnox) on 24.12.2017 00:00.
+ */
+public final class BroadcastTask extends BukkitRunnable {
 
     private final Plugin plugin;
     private final BroadcastConfiguration broadcastConfiguration;
+
     private int count;
 
     public BroadcastTask(final Plugin plugin, final BroadcastConfiguration broadcastConfiguration) {
@@ -28,9 +32,9 @@ public final class BroadcastTask extends BukkitRunnable
                 '&',
                 this.broadcastConfiguration.getPrefix() + ChatColor.RESET + this.broadcastConfiguration.getMessages().get(this.count)
         );
-        
+
         Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
-        
+
         if (this.count == this.broadcastConfiguration.getMessages().size() - 1) {
             this.count = 0;
         } else {
