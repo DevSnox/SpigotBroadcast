@@ -1,6 +1,7 @@
 name: SpigotBroadcast
 author: DevSnox
-version: "2.0-SNAPSHOT"
+authors: [DevSnox, Lars Artmann | LartyHD]
+version: "2.0.1-SNAPSHOT"
 main: me.devsnox.spigotbroadcast.SpigotBroadcast
 commands:
   spigotbroadcast:

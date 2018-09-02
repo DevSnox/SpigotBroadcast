@@ -2,7 +2,7 @@
 # [ --------------------------------------------------------------------------------------- ] #
 #   -= SpigotBroadcast =-                                                                     #
 #   -= Author: DevSnox =-                                                                     #
-#   -= Version: 2.0-SNAPSHOT =-                                                               #
+#   -= Version: 2.0.1-SNAPSHOT =-                                                               #
 #   -= Contact: E-mail: me.devsnox@gmail.com Skype: live:chaos3729 Discord: DevSnox#5642 =-   #
 #   -= Informations:                                                                          #
 #   -= Please send Errors per PM on spigotmc.org =-                                           #
@@ -12,7 +12,7 @@
 
 # { Basic - Configuration }
 
-  # { HELP: The timeunit the interval use (HOURS, MINUTES, SECONDS) }
+# { HELP: The timeunit the interval use (DAYS, HOURS, MINUTES, SECONDS) }
   timeunit: MINUTES
 
   # { HELP: The interval of displaying messages }
@@ -24,7 +24,7 @@
 # { Messages }
 
   # { HELP: The prefix displayed before every message }
-  prefix: "&e[&cBroadcast&e]"
+  prefix: "&e[&cBroadcast&e] "
 
   # { HELP: The list of messages. You can use all colorcodes with '&' before! }
   messages:
