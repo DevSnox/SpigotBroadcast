@@ -32,18 +32,9 @@ public final class UTF8YamlConfiguration extends YamlConfiguration {
     }
 
     @Override
-    public final void load(final File file) throws IOException, InvalidConfigurationException
-    {
+    public final void load(final File file) throws IOException, InvalidConfigurationException {
         Validate.notNull(file, "File cannot be null");
         // Load the content of the target file
         this.load(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
-    }
-
-    @Override
-    @Deprecated
-    public void load(final InputStream stream) throws IOException, InvalidConfigurationException {
-        Validate.notNull(stream, "Stream cannot be null");
-        // Load the content of the target stream
-        this.load(new InputStreamReader(stream, Charsets.UTF_8));
     }
 }
