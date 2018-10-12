@@ -20,6 +20,7 @@ package me.devsnox.spigotbroadcast.commands;
 import me.devsnox.spigotbroadcast.loader.Loader;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -29,7 +30,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author Yasin Dalal (DevSnox)
  * Created by Yasin Dalal (DevSnox) on 24.12.2017 00:00.
  */
-public final class BroadcastCommand implements org.bukkit.command.CommandExecutor {
+public final class BroadcastCommand implements CommandExecutor {
 
     private final JavaPlugin javaPlugin;
     private final Loader loader;
