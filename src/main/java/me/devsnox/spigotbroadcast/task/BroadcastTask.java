@@ -6,6 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.function.Consumer;
+
 /**
  * @author Yasin Dalal (DevSnox)
  * Created by Yasin Dalal (DevSnox) on 24.12.2017 00:00.
@@ -28,12 +30,7 @@ public final class BroadcastTask extends BukkitRunnable {
     }
 
     public void run() {
-        String message = ChatColor.translateAlternateColorCodes(
-                '&',
-                this.broadcastConfiguration.getPrefix() + ChatColor.RESET + this.broadcastConfiguration.getMessages().get(this.count)
-        );
-
-        Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
+        this.broadcastConfiguration.getMessages().get(this.count).getLines().forEach(message -> Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message)));
 
         if (this.count == this.broadcastConfiguration.getMessages().size() - 1) {
             this.count = 0;

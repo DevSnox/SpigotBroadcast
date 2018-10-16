@@ -27,16 +27,23 @@ import java.util.concurrent.TimeUnit;
  */
 public final class BroadcastConfiguration {
 
+    private final boolean prefixEnabled;
     private final String prefix;
     private final Integer interval;
     private final TimeUnit timeUnit;
-    private final List<String> messages;
+    private final List<BroadcastMessage> messages;
 
-    BroadcastConfiguration(final String prefix, final int interval, final TimeUnit timeUnit, final List<String> messages) {
+    BroadcastConfiguration(final boolean prefixEnabled, final String prefix,
+                           final int interval, final TimeUnit timeUnit, final List<BroadcastMessage> messages) {
+        this.prefixEnabled = prefixEnabled;
         this.prefix = prefix;
         this.interval = interval;
         this.timeUnit = timeUnit;
         this.messages = messages;
+    }
+
+    public boolean isPrefixEnabled() {
+        return prefixEnabled;
     }
 
     public String getPrefix() {
@@ -51,7 +58,7 @@ public final class BroadcastConfiguration {
         return this.timeUnit;
     }
 
-    public List<String> getMessages() {
+    public List<BroadcastMessage> getMessages() {
         return this.messages;
     }
 

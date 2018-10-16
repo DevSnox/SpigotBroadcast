@@ -15,15 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.devsnox.spigotbroadcast.exceptions;
+package me.devsnox.spigotbroadcast.configuration;
+
+import java.util.List;
 
 /**
- * @author Lars Artmann | LartyHD and Yasin Dalal (DevSnox)
- * Created by Lars Artmann | LartyHD on 02.09.2018 14:05.
- * Last edit 02.09.2018
+ * @author Yasin Dalal (DevSnox)
+ * Created by Yasin Dalal (DevSnox) on 12.10.2018 15:10.
  */
-public class AlreadyInitializeException extends RuntimeException {
+public final class BroadcastMessage {
 
-    public AlreadyInitializeException() {
+    private final List<String> lines;
+
+    public BroadcastMessage(final List<String> lines) {
+        this.lines = lines;
+    }
+
+    public List<String> getLines() {
+        return lines;
     }
 }

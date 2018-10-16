@@ -17,17 +17,21 @@
 
 package me.devsnox.spigotbroadcast.configuration;
 
-import com.google.common.base.Charsets;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 
 /**
@@ -58,12 +62,15 @@ public final class BroadcastConfigurator {
 
 
     public void load() {
+        final boolean prefixEnabled = this.yamlConfiguration.getBoolean("prefix-enabled");
+        final String prefix = this.yamlConfiguration.getString("prefix");
+
         TimeUnit timeUnit = TimeUnit.MINUTES;
 
         try {
             timeUnit = TimeUnit.valueOf(this.yamlConfiguration.getString("timeunit"));
 
-            if (timeUnit == TimeUnit.MICROSECONDS || timeUnit == TimeUnit.MILLISECONDS) {
+            if (timeUnit == TimeUnit.NANOSECONDS || timeUnit == TimeUnit.MICROSECONDS || timeUnit == TimeUnit.MILLISECONDS) {
                 throw new IllegalArgumentException("TimeUnit is tow low");
             }
         } catch (final IllegalArgumentException exception) {
@@ -81,30 +88,39 @@ public final class BroadcastConfigurator {
             this.log(Level.INFO, "TimeUnit changed to MINUTES, you can change it in the config.yml!");
         }
 
-        this.broadcastConfiguration = new BroadcastConfiguration(this.yamlConfiguration.getString("prefix"), this.yamlConfiguration.getInt("interval"), timeUnit, this.yamlConfiguration.getStringList("messages"));
+        final List<BroadcastMessage> messages = new ArrayList<>();
 
-        if (this.yamlConfiguration.isSet("enabled")) {
-            if (this.yamlConfiguration.getBoolean("enabled")) {
-                final File messagesFile = new File(this.javaPlugin.getDataFolder() + File.separator + "messages.txt");
+        if (!prefixEnabled) {
 
-                if (messagesFile.exists()) {
-                    final List<String> lines = new ArrayList<>();
+            this.yamlConfiguration.getStringList("messages")
+                    .forEach(s -> messages.add(new BroadcastMessage(Arrays.asList(s))));
 
-                    try (final BufferedReader br = new BufferedReader((new InputStreamReader(new FileInputStream(messagesFile), Charsets.UTF_8)))) {
-                        for (String line; (line = br.readLine()) != null; ) {
-                            lines.add(line);
-                        }
-                    } catch (final IOException e) {
-                        e.printStackTrace();
-                    }
+            this.javaPlugin.saveResource("config.yml", true);
 
-                    this.broadcastConfiguration.getMessages().addAll(lines);
-                } else {
-                    log(Level.SEVERE, "Your configuration file is out of date!");
-                    log(Level.INFO, "Please delete it and restart your server or change the value enabled in the configuration file to false!");
-                }
-            }
+            //TODO: Logging
+        } else {
+            final ConfigurationSection configurationSection = this.yamlConfiguration.getConfigurationSection("messages");
+            configurationSection.getKeys(false).forEach(s -> messages.add(new BroadcastMessage(configurationSection.getStringList(s + ".lines"))));
         }
+
+        messages.replaceAll(broadcastMessage -> {
+            broadcastMessage.getLines().replaceAll(raw -> {
+                StringBuilder stringBuilder = new StringBuilder();
+
+                if (prefixEnabled) {
+                    stringBuilder.append(prefix);
+                    stringBuilder.append(ChatColor.RESET);
+                }
+
+                stringBuilder.append(ChatColor.translateAlternateColorCodes('&', raw));
+
+                return stringBuilder.toString();
+            });
+
+            return broadcastMessage;
+        });
+
+        this.broadcastConfiguration = new BroadcastConfiguration(prefixEnabled, prefix, this.yamlConfiguration.getInt("interval"), timeUnit, messages);
     }
 
     private void log(final Level level, final String message) {
