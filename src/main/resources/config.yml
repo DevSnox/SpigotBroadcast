@@ -2,10 +2,10 @@
 # [ --------------------------------------------------------------------------------------- ] #
 #   -= SpigotBroadcast =-                                                                     #
 #   -= Author: DevSnox =-                                                                     #
-#   -= Version: 3.0-SNAPSHOT =-                                                               #
-#   -= Contact: E-mail: me.devsnox@gmail.com Skype: live:chaos3729 Discord: DevSnox#5642 =-   #
-#   -= Informations:                                                                          #
-#   -= Please send Errors per PM on spigotmc.org =-                                           #
+#   -= Version: 3.0-DEVELOPMENT =-                                                            #
+#   -= Contact: E-mail: me.devsnox@gmail.com Discord: DevSnox#2979 =-                         #
+#   -= Information's:                                                                         #
+#   -= Please send exceptions per PM on spigotmc.org =-                                       #
 #   -= When you use this Plugin please rate it on spigotmc.org =-                             #
 # [ --------------------------------------------------------------------------------------- ] #
 
@@ -27,19 +27,18 @@
   prefix-enabled: true
 
   # { HELP: The prefix displayed before every message }
-  prefix: "&e[&cBroadcast&e]"
+  # { Don't forget the space after the prefix if you want to have a space between prefix and messages}
+  prefix: "&e[&cBroadcast&e] "
 
   # { HELP: The list of messages. You can use all colorcodes with '&' before! }
   messages:
     '1':
       lines:
-      - ""
-      - ""
-      - ""
+      - "&aLine one"
+      - "&aLine two"
+      - "&cLine tree"
     '2':
       lines:
-      - ""
-      - ""
-      - ""
+      - "I'm a one-liner known as single as well :P"
 
 #{ --------- }

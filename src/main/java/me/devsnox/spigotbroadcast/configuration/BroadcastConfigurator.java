@@ -63,7 +63,8 @@ public final class BroadcastConfigurator {
 
     public void load() {
         final boolean prefixEnabled = this.yamlConfiguration.getBoolean("prefix-enabled");
-        final String prefix = this.yamlConfiguration.getString("prefix");
+        final String prefix = ChatColor.translateAlternateColorCodes('&',
+                this.yamlConfiguration.getString("prefix"));
 
         TimeUnit timeUnit = TimeUnit.MINUTES;
 
